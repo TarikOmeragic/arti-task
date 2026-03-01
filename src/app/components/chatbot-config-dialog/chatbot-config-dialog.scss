@@ -1,0 +1,36 @@
+:host {
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+      
+    .files {
+        margin-top: 16px;
+
+        &__header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+      
+    mat-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .disabled {
+        opacity: 0.5;
+    }
+    
+    .files-wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+}

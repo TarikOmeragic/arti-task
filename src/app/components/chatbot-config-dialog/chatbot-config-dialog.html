@@ -1,0 +1,77 @@
+<h2 mat-dialog-title>{{ createAction ? 'Create configuration' : 'Edit configuration' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="configForm" class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      @if (configForm.controls['name'].hasError('required')) {
+          <mat-error>
+            Name is required
+          </mat-error>
+      }
+    </mat-form-field>
+
+    <div class="personality-field">
+        <label class="mat-body-1">Personality (0.0 – 1.0)</label>
+      
+        <mat-slider [min]="0" [max]="1" [step]="0.1">
+          <input matSliderThumb formControlName="personality" />
+        </mat-slider>
+      
+        <span class="value">
+          {{ configForm.get('personality')?.value | number: '1.1-1' }}
+        </span>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="3" formControlName="description"></textarea>
+      @if (configForm.controls['description'].hasError('required')) {
+          <mat-error>
+            Description is required
+          </mat-error>
+      }
+    </mat-form-field>
+
+    <section class="files">
+        <div class="files__header">
+            <h3>Knowledge base files (.txt)</h3>
+            <div>
+                <button type="button" mat-stroked-button (click)="uploader.click()">
+                    Choose files
+                </button>
+                <input
+                    #uploader
+                    type="file"
+                    hidden
+                    multiple
+                    accept=".txt"
+                    (change)="onFilesSelected($event)"
+                />
+            </div>
+        </div>
+
+        @if (files.length) {
+            @for (file of files; track $index; let last = $last) {
+                <div
+                class="files-wrapper"
+                [ngStyle]="{ 'border-bottom': !last ? 'solid .1rem' : null }"
+                >
+                <div>{{ file.name }}</div>
+                <button mat-icon-button color="warn" (click)="removeFile(file.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                </div>
+            }
+        } @else {
+            <p>No files yet.</p>
+        }
+    </section>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="configForm.invalid" [class.disabled]="configForm.invalid" (click)="save()">Save</button>
+</mat-dialog-actions>

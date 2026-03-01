@@ -14,6 +14,7 @@ html {
     ),
     typography: Roboto,
     density: 0,
+    font-size: 62.5%,
   ));
 }
 
@@ -32,6 +33,13 @@ body {
 
   // Reset the user agent margin.
   margin: 0;
+
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 62.5%;
+
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: #fff;
+  }
 }
 /* You can add global styles to this file, and also import other style files */
 
