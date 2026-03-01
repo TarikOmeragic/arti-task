@@ -1,0 +1,46 @@
+<button mat-button (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+    Back to chatbots
+</button>
+@if (selectedChatbot(); as bot) {
+    <div class="chatbot-wrapper">
+        <div class="chatbot-wrapper__data">
+            <div class="chatbot-wrapper__title">
+                Name: {{ bot.name }}
+            </div>
+            <div class="chatbot-wrapper__text">
+                Personality: {{ bot.personality | number: '1.1-1' }}
+            </div>
+            <div class="chatbot-wrapper__text">
+                Description: {{ bot.description }}
+            </div>
+            <section class="files">
+                <div class="chatbot-wrapper__text">
+                    Knowledge base files
+                </div>
+                @if (bot.knowledgeBaseFiles.length) {
+                    <ul>
+                        @for (file of bot.knowledgeBaseFiles; track file.id) {
+                            <li class="chatbot-wrapper__text">
+                              {{ file.name }}
+                            </li>
+                        }
+                    </ul>
+                }
+                @else {
+                    <p>No files attached.</p>
+                }
+            </section>
+        </div>
+        <button mat-button color="primary" (click)="edit()">
+            <mat-icon>edit</mat-icon>
+            Edit
+        </button>
+    </div>
+    <section class="chat">
+        <app-chat-simulation></app-chat-simulation>
+    </section>
+}
+@else {
+    <p>Chatbot not found. <a routerLink="/chatbots">Back to list</a></p>
+}

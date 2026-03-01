@@ -1,0 +1,45 @@
+@if (selectedChatbot(); as bot) {
+    <div class="chat-container">
+        <div class="messages" #messagesContainer>
+            @for (msg of messages(); track msg.id) {
+                <div
+                    class="bubble"
+                    [ngClass]="msg.role"
+                >
+                    <div class="text">{{ msg.text }}</div>
+                    <div class="meta">
+                    {{ msg.timestamp | date: 'shortTime' }}
+                    </div>
+                </div>
+            }
+            @if (isBotTyping()) {
+                <div class="typing">
+                    Bot is typing…
+                </div>
+            }
+        </div>
+        <form class="input-row" (ngSubmit)="send()">
+        <mat-form-field class="input-field" appearance="outline">
+            <mat-label>Message</mat-label>
+            <input
+                matInput
+                [(ngModel)]="inputText"
+                name="message"
+                [disabled]="!bot"
+            />
+        </mat-form-field>
+    
+        <button
+            mat-icon-button
+            color="primary"
+            type="submit"
+            [disabled]="!bot || !inputText.trim()"
+        >
+            <mat-icon>send</mat-icon>
+        </button>
+        </form>
+    </div>
+}
+@else {
+    <p>Select a chatbot from the list to start chatting.</p>
+}
