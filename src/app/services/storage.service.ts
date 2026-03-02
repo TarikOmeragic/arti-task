@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
-const STORAGE_PREFIX = 'arti.'
+import { STORAGE_PREFIX } from '../constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
+
   getItem<T>(key: string): T | null {
     const raw = localStorage.getItem(STORAGE_PREFIX + key);
 
@@ -21,5 +22,4 @@ export class StorageService {
   removeItem(key: string): void {
     localStorage.removeItem(STORAGE_PREFIX + key);
   }
-  
 }

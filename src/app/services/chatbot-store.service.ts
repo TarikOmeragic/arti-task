@@ -1,17 +1,14 @@
 import { computed, Injectable, signal } from '@angular/core';
 
+import { CHATBOTS_KEY, SELECTED_ID_KEY } from '../constants';
 import { generateUUID } from '../helpers/uuid-generator';
 import { ChatbotConfig } from '../interfaces/chatbot-config';
 import { StorageService } from './storage.service';
-
-const CHATBOTS_KEY = 'chatbots';
-const SELECTED_ID_KEY = 'selected-id';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatbotStoreService {
-
   private _chatbots = signal<ChatbotConfig[]>([]);
   private _selectedChatbotId = signal<string | null>(null);
 
@@ -31,7 +28,7 @@ export class ChatbotStoreService {
       this._chatbots.set(stored);
     }
     if (storedSelected) {
-      this.selectChatBot(storedSelected);
+      this.selectChatbotConfig(storedSelected);
     }
   }
 
@@ -41,7 +38,7 @@ export class ChatbotStoreService {
   }
 
   selectConfig(id: string): void {
-    this.selectChatBot(id);
+    this.selectChatbotConfig(id);
     this.persistToStorage();
   }
 
@@ -55,7 +52,7 @@ export class ChatbotStoreService {
       [...chatbots, newConfig]
     );
 
-    this.selectChatBot(newConfig.id);
+    this.selectChatbotConfig(newConfig.id);
     this.persistToStorage();
 
     return newConfig;
@@ -65,7 +62,7 @@ export class ChatbotStoreService {
     this._chatbots.update(chatbots => 
       chatbots.map(chatbot => chatbot.id === id ? { ...chatbot, ...config } : chatbot)
     );
-    this.selectChatBot(id);
+    this.selectChatbotConfig(id);
 
     this.persistToStorage();
   }
@@ -76,43 +73,13 @@ export class ChatbotStoreService {
     );
 
     if (this._selectedChatbotId() === id) {
-      this.selectChatBot();
+      this.selectChatbotConfig();
     }
 
     this.persistToStorage();
   }
 
-  selectChatBot(id: string | null = null): void {
+  selectChatbotConfig(id: string | null = null): void {
     this._selectedChatbotId.set(id);
   }
-
-  // addFilesToConfig(configId: string, files: KnowledgeBaseFile[]): void {
-  //   this._chatbots.update(chatbots => 
-  //     chatbots.map(chatbot => 
-  //       chatbot.id === configId
-  //       ? {
-  //         ...chatbot,
-  //         knowledgeBaseFiles: [...chatbot.knowledgeBaseFiles, ...files]
-  //       }
-  //       : chatbot
-  //     )
-  //   )
-  //   this.selectChatBot(configId);
-  //   this.persistToStorage();
-  // }
-
-  // removeFileFromConfig(configId: string, fileId: string): void {
-  //   this._chatbots.update(chatbots =>
-  //     chatbots.map(chatbot =>
-  //       chatbot.id === configId
-  //       ? {
-  //         ...chatbot,
-  //         knowledgeBaseFiles: chatbot.knowledgeBaseFiles.filter(f => f.id !== fileId)
-  //       }
-  //       : chatbot
-  //     )
-  //   )
-  //   this.selectChatBot(configId);
-  //   this.persistToStorage();
-  // }
 }

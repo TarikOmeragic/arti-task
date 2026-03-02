@@ -19,27 +19,30 @@
             }
         </div>
         <form class="input-row" (ngSubmit)="send()">
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-label>Message</mat-label>
-            <input
-                matInput
-                [(ngModel)]="inputText"
-                name="message"
-                [disabled]="!bot"
-            />
-        </mat-form-field>
-    
-        <button
-            mat-icon-button
-            color="primary"
-            type="submit"
-            [disabled]="!bot || !inputText.trim()"
-        >
-            <mat-icon>send</mat-icon>
-        </button>
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>
+                    Message
+                </mat-label>
+                <input
+                    matInput
+                    [(ngModel)]="inputText"
+                    name="message"
+                    [disabled]="!bot"
+                />
+            </mat-form-field>
+            <button
+                mat-icon-button
+                color="primary"
+                type="submit"
+                [disabled]="!bot || !inputText.trim()"
+            >
+                <mat-icon>send</mat-icon>
+            </button>
         </form>
     </div>
 }
 @else {
-    <p>Select a chatbot from the list to start chatting.</p>
+    <p class="text">
+        Select a chatbot from the list to start chatting.
+    </p>
 }

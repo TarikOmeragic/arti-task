@@ -7,3 +7,7 @@ export interface ChatbotConfig {
     description: string;
     knowledgeBaseFiles: KnowledgeBaseFile[];
 }
+
+export interface ChatbotConfigDialogData {
+    chatbotId?: string;
+}

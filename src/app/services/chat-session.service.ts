@@ -1,5 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
 
+import { BOT_REPLY_DELAY } from '../constants';
 import { generateUUID } from '../helpers/uuid-generator';
 import { ChatMessage } from '../interfaces/chat-message';
 import { ChatbotConfig } from '../interfaces/chatbot-config';
@@ -45,14 +46,10 @@ export class ChatSessionService {
 
       this._messages.update(list => [...list, reply]);
       this._isBotTyping.set(false);
-    }, 1500);
+    }, BOT_REPLY_DELAY);
   }
 
-  private buildFakeReply(userText: string, config: ChatbotConfig | null): string {
-    if (!config) {
-      return `I'm a demo bot without a config yet, but I heard: "${userText}".`;
-    }
-
-    return `${config.name}: You said: "${userText}". This is just a simulated reply.`;
+  private buildFakeReply(userText: string, config: ChatbotConfig): string {
+    return `${config.name}: You said: "${userText}". This is a simulated reply.`;
   }  
 }

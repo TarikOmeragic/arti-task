@@ -6,27 +6,23 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import { MatSliderModule } from '@angular/material/slider';
 
 import { generateUUID } from '../../helpers/uuid-generator';
+import { ChatbotConfigDialogData } from '../../interfaces/chatbot-config';
 import { KnowledgeBaseFile } from '../../interfaces/knowledge-base-file';
 import { ChatbotStoreService } from '../../services/chatbot-store.service';
 
-export interface ChatbotConfigDialogData {
-  chatbotId?: string;
-}
-
 @Component({
   selector: 'app-chatbot-config-dialog',
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSliderModule, MatButtonModule, MatListModule, MatIconModule],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSliderModule, MatButtonModule, MatIconModule],
   templateUrl: './chatbot-config-dialog.html',
   styleUrl: './chatbot-config-dialog.scss',
   standalone: true
 })
 export class ChatbotConfigDialog implements OnInit {
 
-  createAction: boolean = true;
+  isCreateMode: boolean = true;
   files: KnowledgeBaseFile[] = [];
   editingId: string | undefined = undefined;
   configForm!: FormGroup;
@@ -45,9 +41,9 @@ export class ChatbotConfigDialog implements OnInit {
       description: ['', Validators.required]
     });
 
-    this.createAction = !this.data.chatbotId;
+    this.isCreateMode = !this.data.chatbotId;
 
-    if (!this.createAction) {
+    if (!this.isCreateMode) {
       this.editingId = this.data.chatbotId;
       const bot = this.chatbotStoreService.chatbots().find(chatbot => chatbot.id === this.editingId);
       if (bot) {
@@ -96,7 +92,7 @@ export class ChatbotConfigDialog implements OnInit {
 
     const { name, personality, description } = this.configForm.getRawValue();
 
-    if (this.createAction || !this.editingId) {
+    if (this.isCreateMode || !this.editingId) {
       const created = this.chatbotStoreService.createConfig({
         name,
         personality,

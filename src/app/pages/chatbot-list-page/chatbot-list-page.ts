@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -9,7 +8,7 @@ import { ChatbotList } from '../../components/chatbot-list/chatbot-list';
 
 @Component({
   selector: 'app-chatbot-list-page',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, ChatbotList],
+  imports: [MatButtonModule, MatIconModule, ChatbotList],
   templateUrl: './chatbot-list-page.html',
   styleUrl: './chatbot-list-page.scss',
   standalone: true

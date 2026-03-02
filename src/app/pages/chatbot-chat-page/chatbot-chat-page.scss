@@ -4,6 +4,10 @@
     flex-direction: column;
     gap: 2rem;
 
+    button {
+        align-self: flex-start;
+    }
+
     .chatbot-wrapper {
         width: 100%;
         display: flex;
@@ -27,7 +31,6 @@
 
         button {
             align-self: flex-start;
-            font-size: 1.5rem;
         }
     }
 }

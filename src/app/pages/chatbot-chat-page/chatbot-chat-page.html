@@ -1,4 +1,4 @@
-<button mat-button (click)="back()">
+<button mat-raised-button (click)="back()">
     <mat-icon>arrow_back</mat-icon>
     Back to chatbots
 </button>
@@ -16,7 +16,7 @@
             </div>
             <section class="files">
                 <div class="chatbot-wrapper__text">
-                    Knowledge base files
+                    Knowledge base files: {{ bot.knowledgeBaseFiles.length }}
                 </div>
                 @if (bot.knowledgeBaseFiles.length) {
                     <ul>
@@ -27,12 +27,9 @@
                         }
                     </ul>
                 }
-                @else {
-                    <p>No files attached.</p>
-                }
             </section>
         </div>
-        <button mat-button color="primary" (click)="edit()">
+        <button mat-raised-button color="primary" (click)="edit()">
             <mat-icon>edit</mat-icon>
             Edit
         </button>
@@ -42,5 +39,7 @@
     </section>
 }
 @else {
-    <p>Chatbot not found. <a routerLink="/chatbots">Back to list</a></p>
+    <p class="text">
+        Chatbot not found. <a routerLink="/chatbots">Back to list</a>
+    </p>
 }

@@ -12,7 +12,7 @@ import { ChatbotConfigDialog } from '../chatbot-config-dialog/chatbot-config-dia
 
 @Component({
   selector: 'app-chatbot-list',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
+  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule],
   templateUrl: './chatbot-list.html',
   styleUrl: './chatbot-list.scss',
   standalone: true

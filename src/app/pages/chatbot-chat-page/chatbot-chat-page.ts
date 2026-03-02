@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ChatSimulation } from '../../components/chat-simulation/chat-simulation';
@@ -15,7 +13,7 @@ import { ChatbotStoreService } from '../../services/chatbot-store.service';
 
 @Component({
   selector: 'app-chatbot-chat-page',
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatDialogModule, MatCardModule, MatListModule, ChatSimulation],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatDialogModule, ChatSimulation],
   templateUrl: './chatbot-chat-page.html',
   styleUrl: './chatbot-chat-page.scss',
   standalone: true
