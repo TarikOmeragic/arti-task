@@ -1,18 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 
 import { ChatbotConfig } from '../../interfaces/chatbot-config';
 import { ChatbotStoreService } from '../../services/chatbot-store.service';
 import { ChatbotConfigDialog } from '../chatbot-config-dialog/chatbot-config-dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-chatbot-list',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatTooltipModule],
   templateUrl: './chatbot-list.html',
   styleUrl: './chatbot-list.scss',
   standalone: true
@@ -44,8 +46,15 @@ export class ChatbotList implements OnInit {
 
   delete(id: string, event: MouseEvent): void {
     event.stopPropagation();
-    if (confirm('Delete this chatbot configuration?')) {
-      this.chatbotStoreService.deleteConfig(id);
-    }
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.chatbotStoreService.deleteConfig(id);
+      }
+    });
   }
 }

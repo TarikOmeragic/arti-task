@@ -34,8 +34,8 @@ export class ChatSimulation implements OnInit, AfterViewChecked {
     private chatbotStoreService: ChatbotStoreService
   ) {
     effect(() => {
-      this.chatSessionService.messages().length;
-      this.chatSessionService.isBotTyping();
+      this.messages().length;
+      this.isBotTyping();
       this.scheduleScrollToBottom();
     });
   }

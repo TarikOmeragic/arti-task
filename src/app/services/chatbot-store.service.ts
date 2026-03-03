@@ -27,8 +27,10 @@ export class ChatbotStoreService {
     if (stored) {
       this._chatbots.set(stored);
     }
-    if (storedSelected) {
+    if (storedSelected && stored?.some(bot => bot.id === storedSelected)) {
       this.selectChatbotConfig(storedSelected);
+    } else {
+      this.selectChatbotConfig(null);
     }
   }
 
@@ -73,13 +75,13 @@ export class ChatbotStoreService {
     );
 
     if (this._selectedChatbotId() === id) {
-      this.selectChatbotConfig();
+      this.selectChatbotConfig(null);
     }
 
     this.persistToStorage();
   }
 
-  selectChatbotConfig(id: string | null = null): void {
+  private selectChatbotConfig(id: string | null): void {
     this._selectedChatbotId.set(id);
   }
 }

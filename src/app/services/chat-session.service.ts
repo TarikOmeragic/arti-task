@@ -9,8 +9,8 @@ import { ChatbotConfig } from '../interfaces/chatbot-config';
   providedIn: 'root',
 })
 export class ChatSessionService {
-  private readonly _messages = signal<ChatMessage[]>([]);
-  private readonly _isBotTyping = signal<boolean>(false);
+  private _messages = signal<ChatMessage[]>([]);
+  private _isBotTyping = signal<boolean>(false);
 
   readonly messages = computed(() => this._messages());
   readonly isBotTyping = computed(() => this._isBotTyping());

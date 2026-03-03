@@ -12,7 +12,12 @@ export class StorageService {
 
     if (!raw) return null;
 
-    return JSON.parse(raw) as T;
+    try {
+      return JSON.parse(raw) as T;
+    } catch {
+      this.removeItem(key);
+      return null;
+    }
   }
 
   setItem(key: string, value: any): void {

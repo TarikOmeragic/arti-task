@@ -6,8 +6,12 @@
     justify-content: flex-start;
     gap: 1rem;
 
-    .link:hover {
-        cursor: pointer;
+    .link {
         font-weight: 700;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
 }

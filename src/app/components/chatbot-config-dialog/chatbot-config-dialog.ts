@@ -22,9 +22,9 @@ import { ChatbotStoreService } from '../../services/chatbot-store.service';
 })
 export class ChatbotConfigDialog implements OnInit {
 
-  isCreateMode: boolean = true;
+  isCreateMode = true;
   files: KnowledgeBaseFile[] = [];
-  editingId: string | undefined = undefined;
+  editingId?: string;
   configForm!: FormGroup;
 
   constructor(
@@ -41,7 +41,9 @@ export class ChatbotConfigDialog implements OnInit {
       description: ['', Validators.required]
     });
 
-    this.isCreateMode = !this.data.chatbotId;
+    if (this.data) {
+      this.isCreateMode = !this.data.chatbotId;
+    }
 
     if (!this.isCreateMode) {
       this.editingId = this.data.chatbotId;
@@ -63,7 +65,7 @@ export class ChatbotConfigDialog implements OnInit {
       return;
     }
 
-    const selected: KnowledgeBaseFile[] = Array.from(input.files)
+    const newFiles: KnowledgeBaseFile[] = Array.from(input.files)
       .filter(file => !this.files.some(existing => existing.name === file.name))
       .map(file => ({
         id: generateUUID(),
@@ -72,7 +74,7 @@ export class ChatbotConfigDialog implements OnInit {
         addedAt: new Date().toISOString(),
       }));
 
-    this.files = [...this.files, ...selected];
+    this.files = [...this.files, ...newFiles];
     input.value = '';
   }
 

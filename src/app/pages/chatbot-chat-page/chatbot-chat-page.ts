@@ -49,11 +49,13 @@ export class ChatbotChatPage implements OnInit {
 
   edit(): void {
     const bot = this.selectedChatbot();
-    if (!bot) return;
+    if (!bot) {
+      return;
+    }
+
     this.dialog.open(ChatbotConfigDialog, {
       width: '800px',
       data: { chatbotId: bot.id }
     });
   }
-
 }

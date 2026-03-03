@@ -17,9 +17,9 @@ export class ChatbotListPage {
 
   constructor(private dialog: MatDialog) {}
 
-  openCreateDialog() {
+  openCreateDialog(): void {
     this.dialog.open(ChatbotConfigDialog, {
       width: '800px'
-    })
+    });
   }
 }

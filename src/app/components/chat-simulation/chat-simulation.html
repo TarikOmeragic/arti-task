@@ -6,9 +6,11 @@
                     class="bubble"
                     [ngClass]="msg.role"
                 >
-                    <div class="text">{{ msg.text }}</div>
+                    <div>
+                        {{ msg.text }}
+                    </div>
                     <div class="meta">
-                    {{ msg.timestamp | date: 'shortTime' }}
+                        {{ msg.timestamp | date: 'shortTime' }}
                     </div>
                 </div>
             }
