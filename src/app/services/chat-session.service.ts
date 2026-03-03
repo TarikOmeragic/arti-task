@@ -11,6 +11,7 @@ import { ChatbotConfig } from '../interfaces/chatbot-config';
 export class ChatSessionService {
   private _messages = signal<ChatMessage[]>([]);
   private _isBotTyping = signal<boolean>(false);
+  private botReplyTimeout: number | null = null;
 
   readonly messages = computed(() => this._messages());
   readonly isBotTyping = computed(() => this._isBotTyping());
@@ -18,12 +19,15 @@ export class ChatSessionService {
   resetSession(): void {
     this._messages.set([]);
     this._isBotTyping.set(false);
+    this.clearBotReplyTimeout();
   }
 
   sendUserMessage(message: string, config: ChatbotConfig): void {
     if (!message.trim()) {
       return;
     }
+
+    this.clearBotReplyTimeout();
 
     const timestamp = new Date().toISOString();
     const userMsg: ChatMessage = {
@@ -36,7 +40,7 @@ export class ChatSessionService {
     this._messages.update(list => [...list, userMsg]);
     this._isBotTyping.set(true);
 
-    setTimeout(() => {
+    this.botReplyTimeout = setTimeout(() => {
       const reply: ChatMessage = {
         id: generateUUID(),
         role: 'bot',
@@ -46,10 +50,18 @@ export class ChatSessionService {
 
       this._messages.update(list => [...list, reply]);
       this._isBotTyping.set(false);
+      this.botReplyTimeout = null;
     }, BOT_REPLY_DELAY);
   }
 
   private buildFakeReply(userText: string, config: ChatbotConfig): string {
     return `${config.name}: You said: "${userText}". This is a simulated reply.`;
-  }  
+  }
+
+  private clearBotReplyTimeout(): void {
+    if (this.botReplyTimeout !== null) {
+      clearTimeout(this.botReplyTimeout);
+      this.botReplyTimeout = null;
+    }
+  }
 }
