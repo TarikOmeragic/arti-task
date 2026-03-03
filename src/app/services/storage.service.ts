@@ -20,7 +20,7 @@ export class StorageService {
     }
   }
 
-  setItem(key: string, value: any): void {
+  setItem<T>(key: string, value: T): void {
     localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value));
   }
 

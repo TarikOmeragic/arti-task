@@ -65,7 +65,7 @@
         </div>
       </div>
       @if (files.length) {
-        @for (file of files; track $index; let last = $last) {
+        @for (file of files; track file.id; let last = $last) {
           <div
             class="files-wrapper"
             [ngStyle]="{ 'border-bottom': !last ? 'solid .1rem' : null }"
